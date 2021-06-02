@@ -1,0 +1,48 @@
+<%- layout("layouts/boilerplate") %>
+    <div class="row">
+        <h1 class="text-center">Edit Surfing Site</h1>
+        <div class="col-md-6 offset-md-3">
+            <form class="needs-validation" action="/surfsites/<%= surfsite._id %>?_method=PATCH" method="POST"
+                novalidate enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label" for="title">Title</label>
+                    <input class="form-control" type="text" name="surfsite[title]" id="title" placeholder="Site name"
+                        value="<%= surfsite.title %>" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="location">Location</label>
+                    <input class="form-control" type="text" name="surfsite[location]" id="location"
+                        placeholder="Site location" value="<%= surfsite.location %>" required>
+                </div>
+                <div class="mb-3">
+                    <label class="formFile" for="image">Image</label>
+                    <input class="form-control" type="file" name="surfsite[image]" id="image" multiple>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea class="form-control" type="text" name="surfsite[description]" id="description"
+                        placeholder="Site description" required>
+                    <%= surfsite.description %>
+                    </textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="price">Price</label>
+                    <div class="input-group">
+                        <span class="input-group-text" id="price-label">$</span>
+                        <input id="price" name="surfsite[price]" type="number" class="form-control" placeholder="0"
+                            aria-label="price" aria-describedby="price-label" value="<%= surfsite.price %>" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <% surfsite.image.forEach(function (img, i) { %>
+                        <img src="<%= img.thumbnail %>" class="img-thumbnail d-block" alt="">
+                        <div class="form-check-inline">
+                            <input type="checkbox" name="deleteImages[]" id="image-<%=i%>" value="<%= img.filename %>">
+                        </div>
+                        <label for="image-<%=i%>">Delete?</label>
+                    <% }) %>  
+                </div>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+        </div>
+    </div>

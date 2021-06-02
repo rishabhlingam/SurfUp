@@ -1,0 +1,40 @@
+<%- layout("layouts/boilerplate") %>
+<div id="cluster-map"></div>
+    <h1>All Surfsites</h1>
+    <ul>
+        <% for(let site of surfsites) { %>
+            <div class="card mb-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <% if(site.image.length) { %>
+                            <img src="<%= site.image[0].url %> " alt="" class="img-fluid">
+                            <% } else { %>
+                                <img src="" alt="" class="img-fluid">
+                                <% } %>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= site.title %>
+                            </h5>
+                            <p class="card-text">
+                                <%= site.description %>
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    <%= site.location %>
+                                </small>
+                            </p>
+                            <a href="/surfsites/<%= site._id %> " class="btn btn-primary">View</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+    </ul>
+
+    <script>
+        const mapToken = "<%= process.env.MAPBOX_TOKEN %>";
+        const surfsites = { features : <%- JSON.stringify(surfsites) %>};
+    </script>
+    <script src="/scripts/clusterMap.js"></script>
